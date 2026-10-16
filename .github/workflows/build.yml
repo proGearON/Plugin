@@ -1,0 +1,17 @@
+name: Build
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - run: unzip NGT-SMP-3-source.zip
+      - run: mvn -B package -f NGTSMP3/pom.xml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NGT-SMP-3
+          path: NGTSMP3/target/NGT-SMP-3.jar
